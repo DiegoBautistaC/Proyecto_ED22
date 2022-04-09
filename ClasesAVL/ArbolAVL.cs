@@ -12,19 +12,24 @@ namespace ClasesAVL
 
         public delegate int Delegado(T valor1, T valor2);
 
+        public delegate int Delegado2(string valor1, T valor2);
+
         public Delegado Comparador;
 
-        public ArbolAVL(Delegado unComparador)
+        public Delegado2 Comparador2;
+
+        public ArbolAVL(Delegado unComparador, Delegado2 unComparador2)
         {
             this.Comparador = unComparador;
+            this.Comparador2 = unComparador2;
         }
 
         public void Insertar(T unValor)
         {
-            Insertar(unValor, this.Raiz);
+            Insertar(unValor, ref this.Raiz);
         }
 
-        void Insertar(T unValor, NodoAVL<T> raizActual)
+        void Insertar(T unValor, ref NodoAVL<T> raizActual)
         {
             if (raizActual == null)
             {
@@ -37,11 +42,11 @@ namespace ClasesAVL
             }
             else if (Comparador(unValor, raizActual.Valor) > 0)
             {
-                this.Insertar(unValor, raizActual.SubDerecho);
+                this.Insertar(unValor, ref raizActual.SubDerecho);
             }
             else
             {
-                this.Insertar(unValor, raizActual.SubIzquierdo);
+                this.Insertar(unValor, ref raizActual.SubIzquierdo);
             }
 
             if (Comparador(unValor, raizActual.Valor) != 0)
@@ -188,6 +193,86 @@ namespace ClasesAVL
                 y.Altura = Math.Max(y.SubIzquierdo.Altura, y.SubDerecho.Altura) + 1;
             }
             return y;
+        }
+
+        public void Remover(string valor)
+        {
+            this.Remover(valor, ref this.Raiz);
+        }
+
+        void Remover(string valor, ref NodoAVL<T> raizActual)
+        {
+            if(this.Comparador2(valor, raizActual.Valor) == 0)
+            {
+                if(raizActual.SubIzquierdo == null && raizActual.SubDerecho == null)
+                {
+                    raizActual = null;
+                }
+                else if(raizActual.SubIzquierdo != null && raizActual.SubDerecho != null)
+                {
+                    var Remplazo = this.MayorIzquierda(raizActual);
+                    Remplazo.SubDerecho = raizActual.SubDerecho;
+                    Remplazo.SubIzquierdo = raizActual.SubIzquierdo;
+                    raizActual = Remplazo;
+                }
+                else
+                {
+                    if(raizActual.SubDerecho != null)
+                    {
+                        raizActual = raizActual.SubDerecho;
+                    }else
+                    {
+                        raizActual = raizActual.SubIzquierdo;
+                    }
+                }
+            }
+            else if(this.Comparador2(valor, raizActual.Valor) > 0)
+            {
+                this.Remover(valor, ref raizActual.SubDerecho);
+            }
+            else
+            {
+                this.Remover(valor, ref raizActual.SubIzquierdo);
+            }
+        }
+
+        NodoAVL<T> MayorIzquierda(NodoAVL<T> raizActual)
+        {
+            NodoAVL<T> Mayor = null;
+            NodoAVL<T> Auxiliar = raizActual;
+            if(raizActual.SubIzquierdo.SubDerecho == null)
+            {
+                Mayor = Auxiliar.SubIzquierdo;
+                Auxiliar.SubIzquierdo = Auxiliar.SubIzquierdo.SubIzquierdo;
+            }
+            else
+            {
+                Auxiliar = raizActual.SubIzquierdo;
+                bool Validacion = true;
+                while(Auxiliar!= null && Validacion )
+                {
+                    if(Auxiliar.SubDerecho.SubDerecho == null)
+                    {
+                        if(Auxiliar.SubDerecho.SubIzquierdo != null)
+                        {
+                            Mayor = Auxiliar.SubDerecho;
+                            Auxiliar.SubDerecho = Auxiliar.SubDerecho.SubIzquierdo;
+                            Validacion = false;
+                        }else
+                        {
+                            Mayor = Auxiliar.SubDerecho;
+                            Auxiliar.SubDerecho = null;
+                            Validacion = false;
+                        }
+                    }
+                    else
+                    {
+                        Auxiliar = Auxiliar.SubDerecho;
+                    } 
+                        
+                }
+            }
+            return Mayor;
         }
     }
 }
