@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClasesAVL
 {
-    public class ArbolAVL <T>
+    public class ArbolAVL <T> : IEnumerable<T>
     {
         public NodoAVL<T> Raiz;
 
@@ -273,6 +274,45 @@ namespace ClasesAVL
                 }
             }
             return Mayor;
+        }
+
+        public void Leer(NodoAVL<T> raizActual)
+        {
+            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null)
+            {
+                //Lee Raiz
+            }
+            else if (raizActual.SubDerecho == null)
+            {
+                //lee Izquierdo y luego Raiz
+                this.Leer(raizActual.SubIzquierdo);
+            }
+            else if (raizActual.SubIzquierdo == null)
+            {
+                //lee Raiz y luego derecho
+                this.Leer(raizActual.SubDerecho);
+            }
+            else
+            {
+                //lee Izquierdo, lee raiz y luego derecho
+                this.Leer(raizActual.SubIzquierdo);
+                //Raiz
+                this.Leer(Raiz.SubDerecho);
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            throw new Exception();
+            //while ()
+            //{
+            //    yield return
+            //}
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
     }
 }
