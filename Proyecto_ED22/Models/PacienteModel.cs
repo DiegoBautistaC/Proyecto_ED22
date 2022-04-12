@@ -3,41 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Proyecto_ED22.Helpers;
 
 namespace Proyecto_ED22.Models
 {
     public class PacienteModel
     {
-        [Required]
+        //[Required]
         [MinLength (5)]
         [MaxLength(30)]
         public string Nombre { get; set; }
 
-        [Required]
+        //[Required]
         [MinLength(10)]
         [MaxLength(13)]
         public int DPI { get; set; }
 
-        [Required]
+        //[Required]
         [Range(0,120)]
         public int Edad { get; set; }
 
-        [Required]
+        //[Required]
         [MaxLength(8)]
         [MinLength(8)]
-        [Phone]
+        //[Phone]
         public int Telefono { get; set; }
 
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        //[Required]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         
         public DateTime FechaUltimaConsulta { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime FechaProximaConsulta { get; set; }
 
         [MaxLength(500)]
         public string Descripcion { get; set; }
 
+        public static bool Guardar(PacienteModel unPaciente)
+        {
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(unPaciente);
+            Data.Instance.ArbolAVL_NombresPacientes.Insertar(unPaciente);
+            return true;
+        }
     }
 }

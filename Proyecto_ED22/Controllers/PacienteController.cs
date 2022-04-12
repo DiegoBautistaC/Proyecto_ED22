@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Proyecto_ED22.Helpers;
+using Proyecto_ED22.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Proyecto_ED22.Controllers
         // GET: PacienteController/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new PacienteModel());
         }
 
         // POST: PacienteController/Create
@@ -35,7 +36,20 @@ namespace Proyecto_ED22.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var validacion = PacienteModel.Guardar(new PacienteModel { 
+                    Nombre = collection["Nombre"],
+                    DPI = Convert.ToInt32(collection["DPI"]),
+                    Edad = Convert.ToInt32(collection["Edad"]),
+                    Telefono = Convert.ToInt32(collection["Telefono"]),
+                    FechaProximaConsulta = Convert.ToDateTime(collection["FechaProximaConsulta"]),
+                    FechaUltimaConsulta = Convert.ToDateTime(collection["FechaUltimaConsulta"]),
+                    Descripcion = collection["Descripcion"]
+                });
+                if (validacion)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
