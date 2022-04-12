@@ -277,6 +277,31 @@ namespace ClasesAVL
             return Mayor;
         }
 
+        public T Encontrar(string valor)
+        {
+            return this.Encontrar(ref this.Raiz, valor);
+        }
+
+        T Encontrar(ref NodoAVL<T> raizActual, string valor)
+        {
+            if (raizActual == null)
+            {
+                return default(T);
+            }
+            else if (this.Comparador2(valor, raizActual.Valor) == 0)
+            {
+                return raizActual.Valor;
+            }
+            else if (this.Comparador2(valor, raizActual.Valor) > 0)
+            {
+                return this.Encontrar(ref raizActual.SubDerecho, valor);
+            }
+            else
+            {
+                return this.Encontrar(ref raizActual.SubIzquierdo, valor);
+            }
+        }
+
         public void Leer(NodoAVL<T> raizActual, ref Cola<T> cola)
         {
             if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null)
