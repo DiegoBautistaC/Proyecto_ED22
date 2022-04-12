@@ -62,5 +62,10 @@ namespace ClasesAVL
             Tamaño--;
             return valor;
         }
+
+        public bool EstaVacia()
+        {
+            return Tamaño == 0;
+        }
     }
 }

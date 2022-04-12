@@ -221,7 +221,8 @@ namespace ClasesAVL
                     if(raizActual.SubDerecho != null)
                     {
                         raizActual = raizActual.SubDerecho;
-                    }else
+                    }
+                    else
                     {
                         raizActual = raizActual.SubIzquierdo;
                     }
@@ -276,38 +277,44 @@ namespace ClasesAVL
             return Mayor;
         }
 
-        public void Leer(NodoAVL<T> raizActual)
+        public void Leer(NodoAVL<T> raizActual, ref Cola<T> cola)
         {
             if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null)
             {
-                //Lee Raiz
+                cola.Encolar(raizActual.Valor);
             }
             else if (raizActual.SubDerecho == null)
             {
                 //lee Izquierdo y luego Raiz
-                this.Leer(raizActual.SubIzquierdo);
+                this.Leer(raizActual.SubIzquierdo, ref cola);
+                cola.Encolar(raizActual.Valor);
             }
             else if (raizActual.SubIzquierdo == null)
             {
                 //lee Raiz y luego derecho
-                this.Leer(raizActual.SubDerecho);
+                cola.Encolar(raizActual.Valor);
+                this.Leer(raizActual.SubDerecho, ref cola);
             }
             else
             {
                 //lee Izquierdo, lee raiz y luego derecho
-                this.Leer(raizActual.SubIzquierdo);
-                //Raiz
-                this.Leer(Raiz.SubDerecho);
+                this.Leer(raizActual.SubIzquierdo, ref cola);
+                cola.Encolar(Raiz.Valor);
+                this.Leer(Raiz.SubDerecho, ref cola);
             }
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new Exception();
-            //while ()
-            //{
-            //    yield return
-            //}
+            Cola<T> cola = new Cola<T>();
+            this.Leer(this.Raiz, ref cola);
+            if (this.Raiz != null)
+            {
+                while (!cola.EstaVacia())
+                {
+                    yield return cola.Desencolar();
+                }
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
