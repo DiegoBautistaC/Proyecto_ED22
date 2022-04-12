@@ -46,6 +46,21 @@ namespace ClasesAVL
             Tamaño++;
             return true;
         }
-
+        
+        public T Desencolar()
+        {
+            T valor;
+            valor = Cabeza.Valor;
+            if(Tamaño == 1)
+            {
+                Cabeza = null;
+                Coola = null;
+            }else
+            {
+                Cabeza = Cabeza.Siguiente;
+            }
+            Tamaño--;
+            return valor;
+        }
     }
 }
