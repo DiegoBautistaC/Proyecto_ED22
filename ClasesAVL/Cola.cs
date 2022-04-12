@@ -31,5 +31,21 @@ namespace ClasesAVL
             Tamaño = 0;
         }
 
+        public bool Encolar(T valor)
+        {
+            Nodo<T> nuevoNodo = new Nodo<T>(valor);
+            if (Tamaño == 0)
+            {
+                Cabeza = nuevoNodo;
+            }
+            else
+            {
+                Coola.Siguiente = nuevoNodo;
+            }
+            Coola = nuevoNodo;
+            Tamaño++;
+            return true;
+        }
+
     }
 }
