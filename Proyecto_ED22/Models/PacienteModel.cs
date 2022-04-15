@@ -30,6 +30,7 @@ namespace Proyecto_ED22.Models
         public int Telefono { get; set; }
 
         [Required]
+
         public DateTime FechaUltimaConsulta { get; set; }
 
         public DateTime FechaProximaConsulta { get; set; }

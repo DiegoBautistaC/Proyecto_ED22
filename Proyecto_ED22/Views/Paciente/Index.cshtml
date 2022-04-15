@@ -7,7 +7,9 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">| Crear | </a>
+    <a asp-action="BuscarNombre">| Buscar Nombre | </a>
+    <a asp-action="Create">| Buscar DPI |</a>
 </p>
 <table class="table">
     <thead>
@@ -26,9 +28,11 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaProximaConsulta)
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)

@@ -36,6 +36,10 @@ namespace Proyecto_ED22.Controllers
         {
             try
             {
+                if (Convert.ToDateTime(collection["FechaProximaConsulta"]).CompareTo(Convert.ToDateTime(collection["FechaUltimaConsulta"])) <= 0)
+                {
+                    return View();
+                }
                 var validacion = PacienteModel.Guardar(new PacienteModel { 
                     Nombre = collection["Nombre"],
                     DPI = collection["DPI"],
@@ -97,6 +101,28 @@ namespace Proyecto_ED22.Controllers
             {
                 return View();
             }
+        }
+        
+        public ActionResult BuscarNombre(string nombre)
+        {
+            try
+            {
+                 if(nombre != null)
+                 {
+                    var paciente = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(nombre);
+                    return View(paciente);
+                 }
+                else
+                {
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
+                
+            }
+            
         }
     }
 }
