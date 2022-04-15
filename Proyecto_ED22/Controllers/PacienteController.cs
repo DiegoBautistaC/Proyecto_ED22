@@ -38,7 +38,7 @@ namespace Proyecto_ED22.Controllers
             {
                 var validacion = PacienteModel.Guardar(new PacienteModel { 
                     Nombre = collection["Nombre"],
-                    DPI = Convert.ToInt32(collection["DPI"]),
+                    DPI = collection["DPI"],
                     Edad = Convert.ToInt32(collection["Edad"]),
                     Telefono = Convert.ToInt32(collection["Telefono"]),
                     FechaProximaConsulta = Convert.ToDateTime(collection["FechaProximaConsulta"]),
