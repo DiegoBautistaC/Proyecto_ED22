@@ -124,5 +124,27 @@ namespace Proyecto_ED22.Controllers
             }
             
         }
+
+        public ActionResult BuscarDPI(string dpi)
+        {
+            try
+            {
+                if (dpi != null)
+                {
+                    var paciente = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(dpi);
+                    return View(paciente);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
+
+            }
+
+        }
     }
 }
