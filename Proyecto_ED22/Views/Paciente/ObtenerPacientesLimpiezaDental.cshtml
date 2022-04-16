@@ -1,17 +1,10 @@
 ﻿@model IEnumerable<Proyecto_ED22.Models.PacienteModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ObtenerPacienteLimpiezaDental";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">| Crear |</a>
-    <a asp-action="BuscarNombre"> Buscar Nombre |</a>
-    <a asp-action="BuscarDPI"> Buscar DPI |</a>
-    <a asp-action="ObtenerPacientesLimpiezaDental"> Listado Limpieza Dental |</a>
-</p>
+<h1>ObtenerPacienteLimpiezaDental</h1>
 <table class="table">
     <thead>
         <tr>
@@ -29,11 +22,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaProximaConsulta)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -69,13 +60,10 @@
                         @Html.DisplayFor(modelItem => item.Descripcion)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.DPI  }) |
                         @Html.ActionLink("Details", "Details", new {  id=item.DPI  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.DPI  })
                     </td>
                 </tr>
             }
         }
-
     </tbody>
 </table>

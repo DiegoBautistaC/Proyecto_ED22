@@ -107,11 +107,11 @@ namespace Proyecto_ED22.Controllers
         {
             try
             {
-                 if(nombre != null)
-                 {
+                if(nombre != null)
+                {
                     var paciente = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(nombre);
                     return View(paciente);
-                 }
+                }
                 else
                 {
                     return View();
@@ -120,9 +120,7 @@ namespace Proyecto_ED22.Controllers
             catch
             {
                 return View();
-                
             }
-            
         }
 
         public ActionResult BuscarDPI(string dpi)
@@ -142,9 +140,12 @@ namespace Proyecto_ED22.Controllers
             catch
             {
                 return View();
-
             }
+        }
 
+        public ActionResult ObtenerPacientesLimpiezaDental()
+        {
+            return View(Data.Instance.ArbolAVL_LimpiezaDental);
         }
     }
 }
