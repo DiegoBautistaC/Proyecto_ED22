@@ -147,5 +147,9 @@ namespace Proyecto_ED22.Controllers
         {
             return View(Data.Instance.ArbolAVL_LimpiezaDental);
         }
+        public ActionResult ObtenerPacientesOrtodoncia()
+        {
+            return View(Data.Instance.ArbolAVL_Ortodoncia);
+        }
     }
 }

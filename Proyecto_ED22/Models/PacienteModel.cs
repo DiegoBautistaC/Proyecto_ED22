@@ -34,13 +34,13 @@ namespace Proyecto_ED22.Models
 
         [Required(ErrorMessage = "La {0} es requerida.")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha de la última consulta")]
         public DateTime FechaUltimaConsulta { get; set; }
 
         [Display(Name = "Fecha de la próxima consulta")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/mm/yyyy}", ConvertEmptyStringToNull = true, ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ConvertEmptyStringToNull = true, ApplyFormatInEditMode = true)]
         public DateTime FechaProximaConsulta { get; set; }
 
         [MaxLength(500, ErrorMessage = "La descripción no puede sera mayor a 500 caracteres.")]
@@ -54,6 +54,10 @@ namespace Proyecto_ED22.Models
             if (unPaciente.Descripcion == "" && meses >= 6)
             {
                 Data.Instance.ArbolAVL_LimpiezaDental.Insertar(unPaciente);
+            }
+            if (unPaciente.Descripcion.ToUpper().Contains("ORTODONCIA") && meses >=2)
+            {
+                Data.Instance.ArbolAVL_Ortodoncia.Insertar(unPaciente);
             }
             return true;
         }
