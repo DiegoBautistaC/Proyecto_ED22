@@ -46,7 +46,7 @@ namespace Proyecto_ED22
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Paciente}/{action=Index}/{id?}");
             });
         }
     }

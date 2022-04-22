@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Proyecto_ED22.Models.PacienteModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">| Crear |</a>
+    <a asp-action="BuscarNombre"> Buscar Nombre |</a>
+    <a asp-action="BuscarDPI"> Buscar DPI |</a>
+    <a asp-action="ObtenerPacientesLimpiezaDental"> Listado Limpieza Dental |</a>
+    <a asp-action="ObtenerPacientesOrtodoncia"> Listado Ortodoncia |</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DPI)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaProximaConsulta)
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DPI)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Edad)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FechaUltimaConsulta)
+                    </td>
+                    <td>
+                        @if (item.FechaProximaConsulta != null)
+                        {
+                            Html.DisplayNameFor(model => model.FechaUltimaConsulta);
+                        }
+                        else
+                        {
+                            <p class="text-center">Sin fecha</p>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Descripcion != "")
+                        {
+                            Html.DisplayNameFor(model => model.Descripcion);
+                        }
+                        else
+                        {
+                            <p class="text-center">Sin Descripción</p>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.DPI  }) |
+                        @Html.ActionLink("Details", "Details", new {  id=item.DPI  }) |
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.DPI  })
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

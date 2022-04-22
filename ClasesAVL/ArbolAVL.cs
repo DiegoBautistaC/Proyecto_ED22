@@ -332,9 +332,9 @@ namespace ClasesAVL
         public IEnumerator<T> GetEnumerator()
         {
             Cola<T> cola = new Cola<T>();
-            this.Leer(this.Raiz, ref cola);
             if (this.Raiz != null)
             {
+                this.Leer(this.Raiz, ref cola);
                 while (!cola.EstaVacia())
                 {
                     yield return cola.Desencolar();
