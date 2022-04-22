@@ -18,9 +18,9 @@ namespace Proyecto_ED22.Controllers
         }
 
         // GET: PacienteController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            return View(Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id));
         }
 
         // GET: PacienteController/Create
