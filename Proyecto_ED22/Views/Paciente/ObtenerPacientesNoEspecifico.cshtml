@@ -1,20 +1,12 @@
 ﻿@model IEnumerable<Proyecto_ED22.Models.PacienteModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ObtenerPacientesNoEspecifico";
 }
 
-<h1>Index</h1>
+<h1>ObtenerPacientesNoEspecifico</h1>
 
-<p>
-    <a asp-action="Create">| Crear |</a>
-    <a asp-action="BuscarNombre"> Buscar Nombre |</a>
-    <a asp-action="BuscarDPI"> Buscar DPI |</a>
-    <a asp-action="ObtenerPacientesLimpiezaDental"> Listado Limpieza Dental |</a>
-    <a asp-action="ObtenerPacientesOrtodoncia"> Listado Ortodoncia |</a>
-    <a asp-action="ObtenerPacientesCaries"> Listado Caries |</a>
-    <a asp-action="ObtenerPacientesNoEspecifico"> Listado tratamiento no especificado |</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -32,11 +24,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaProximaConsulta)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -86,13 +76,10 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.DPI  }) |
-                        @Html.ActionLink("Details", "Details", new {  id=item.DPI  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.DPI  })
+                        @Html.ActionLink("Details", "Details", new { id = item.DPI })
                     </td>
                 </tr>
             }
         }
-
     </tbody>
 </table>

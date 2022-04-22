@@ -161,5 +161,9 @@ namespace Proyecto_ED22.Controllers
         {
             return View(Data.Instance.ArbolAVL_Caries);
         }
+        public ActionResult ObtenerPacientesNoEspecifico()
+        {
+            return View(Data.Instance.ArbolAVL_NoEspecificos);
+        }
     }
 }

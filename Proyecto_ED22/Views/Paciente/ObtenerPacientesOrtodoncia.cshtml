@@ -57,7 +57,7 @@
                     <td>
                         @if (item.FechaProximaConsulta != null)
                         {
-                            @Html.DisplayFor(model => model.FechaUltimaConsulta);
+                            @Html.DisplayFor(modelItem => item.FechaUltimaConsulta);
                         }
                         else
                         {
@@ -67,7 +67,7 @@
                     <td>
                         @if (item.Descripcion != "")
                         {
-                            @Html.DisplayFor(model => model.Descripcion);
+                            @Html.DisplayFor(modelItem => item.Descripcion);
                         }
                         else
                         {
