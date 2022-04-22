@@ -12,6 +12,7 @@
     <a asp-action="BuscarDPI"> Buscar DPI |</a>
     <a asp-action="ObtenerPacientesLimpiezaDental"> Listado Limpieza Dental |</a>
     <a asp-action="ObtenerPacientesOrtodoncia"> Listado Ortodoncia |</a>
+    <a asp-action="ObtenerPacientesCaries"> Listado Caries |</a>
 </p>
 <table class="table">
     <thead>
@@ -66,7 +67,7 @@
                     <td>
                         @if (item.FechaProximaConsulta != null)
                         {
-                            Html.DisplayNameFor(model => model.FechaUltimaConsulta);
+                            @Html.DisplayFor(modelItem => item.FechaUltimaConsulta);
                         }
                         else
                         {
@@ -76,7 +77,7 @@
                     <td>
                         @if (item.Descripcion != "")
                         {
-                            Html.DisplayNameFor(model => model.Descripcion);
+                            @Html.DisplayFor(modelItem => item.Descripcion);
                         }
                         else
                         {

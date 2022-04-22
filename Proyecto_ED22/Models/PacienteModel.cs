@@ -61,6 +61,10 @@ namespace Proyecto_ED22.Models
             {
                 Data.Instance.ArbolAVL_Ortodoncia.Insertar(unPaciente);
             }
+            if(unPaciente.Descripcion.ToUpper().Contains("CARIES") && meses >= 4)
+            {
+                Data.Instance.ArbolAVL_Caries.Insertar(unPaciente);
+            }
             return true;
         }
 

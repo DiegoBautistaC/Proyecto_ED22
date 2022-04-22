@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Proyecto_ED22.Models.PacienteModel>
 
 @{
-    ViewData["Title"] = "ObtenerPacientesOrtodoncia";
+    ViewData["Title"] = "ObtenerPacientesCaries";
 }
 
-<h1>ObtenerPacientesOrtodoncia</h1>
+<h1>ObtenerPacientesCaries</h1>
 
 <table class="table">
     <thead>
@@ -57,7 +57,7 @@
                     <td>
                         @if (item.FechaProximaConsulta != null)
                         {
-                            @Html.DisplayFor(model => model.FechaUltimaConsulta);
+                            @Html.DisplayFor(modelItem => item.FechaUltimaConsulta);
                         }
                         else
                         {
@@ -67,7 +67,7 @@
                     <td>
                         @if (item.Descripcion != "")
                         {
-                            @Html.DisplayFor(model => model.Descripcion);
+                            @Html.DisplayFor(modelItem => item.Descripcion);
                         }
                         else
                         {
@@ -75,11 +75,10 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id=item.DPI })
+                        @Html.ActionLink("Details", "Details", new {  id=item.DPI }) |
                     </td>
                 </tr>
             }
         }
-
     </tbody>
 </table>

@@ -157,5 +157,9 @@ namespace Proyecto_ED22.Controllers
         {
             return View(Data.Instance.ArbolAVL_Ortodoncia);
         }
+        public ActionResult ObtenerPacientesCaries()
+        {
+            return View(Data.Instance.ArbolAVL_Caries);
+        }
     }
 }
