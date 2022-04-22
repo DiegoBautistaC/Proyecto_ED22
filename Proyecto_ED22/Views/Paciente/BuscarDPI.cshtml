@@ -48,7 +48,14 @@
                 @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.FechaUltimaConsulta)
+                @if (Model.FechaProximaConsulta != null)
+                {
+                    Html.DisplayNameFor(model => model.FechaUltimaConsulta);
+                }
+                else
+                {
+                    <p class="text-center">Sin fecha</p>
+                }
             </dd>
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.FechaProximaConsulta)
@@ -60,7 +67,14 @@
                 @Html.DisplayNameFor(model => model.Descripcion)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Descripcion)
+                @if (Model.Descripcion != "")
+                {
+                    Html.DisplayNameFor(model => model.Descripcion);
+                }
+                else
+                {
+                    <p class="text-center">Sin Descripción</p>
+                }
             </dd>
         </dl>
     </div>

@@ -38,11 +38,13 @@ namespace Proyecto_ED22.Models
         [Display(Name = "Fecha de la última consulta")]
         public DateTime FechaUltimaConsulta { get; set; }
 
+
         [Display(Name = "Fecha de la próxima consulta")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ConvertEmptyStringToNull = true, ApplyFormatInEditMode = true)]
-        public DateTime FechaProximaConsulta { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ConvertEmptyStringToNull = true, ApplyFormatInEditMode = true, NullDisplayText = "00000000")]
+        public DateTime? FechaProximaConsulta { get; set; }
 
+        [Display(Name = "Descripción")]
         [MaxLength(500, ErrorMessage = "La descripción no puede sera mayor a 500 caracteres.")]
         public string Descripcion { get; set; }
 

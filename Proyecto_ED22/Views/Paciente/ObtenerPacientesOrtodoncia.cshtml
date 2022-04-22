@@ -55,13 +55,27 @@
                         @Html.DisplayFor(modelItem => item.FechaUltimaConsulta)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FechaProximaConsulta)
+                        @if (item.FechaProximaConsulta != null)
+                        {
+                            Html.DisplayNameFor(model => model.FechaUltimaConsulta);
+                        }
+                        else
+                        {
+                            <p class="text-center">Sin fecha</p>
+                        }
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
+                        @if (item.Descripcion != "")
+                        {
+                            Html.DisplayNameFor(model => model.Descripcion);
+                        }
+                        else
+                        {
+                            <p class="text-center">Sin Descripción</p>
+                        }
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new { id=item.DPI }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.DPI })
                     </td>
                 </tr>
             }

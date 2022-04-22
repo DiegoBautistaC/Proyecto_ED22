@@ -36,19 +36,25 @@ namespace Proyecto_ED22.Controllers
         {
             try
             {
-                if (Convert.ToDateTime(collection["FechaProximaConsulta"]).CompareTo(Convert.ToDateTime(collection["FechaUltimaConsulta"])) <= 0)
+                string fechaProximaConsulta = collection["FechaProximaConsulta"];
+                PacienteModel nuevoPaciente = new PacienteModel
                 {
-                    return View();
-                }
-                var validacion = PacienteModel.Guardar(new PacienteModel { 
                     Nombre = collection["Nombre"],
                     DPI = collection["DPI"],
                     Edad = Convert.ToInt32(collection["Edad"]),
                     Telefono = Convert.ToInt32(collection["Telefono"]),
-                    FechaProximaConsulta = Convert.ToDateTime(collection["FechaProximaConsulta"]),
                     FechaUltimaConsulta = Convert.ToDateTime(collection["FechaUltimaConsulta"]),
                     Descripcion = collection["Descripcion"]
-                });
+                };
+                if (fechaProximaConsulta != "")
+                {
+                    if (Convert.ToDateTime(collection["FechaProximaConsulta"]).CompareTo(Convert.ToDateTime(collection["FechaUltimaConsulta"])) <= 0)
+                    {
+                        return View();
+                    }
+                    nuevoPaciente.FechaProximaConsulta = Convert.ToDateTime(collection["FechaProximaConsulta"]);
+                }
+                var validacion = PacienteModel.Guardar(nuevoPaciente);
                 if (validacion)
                 {
                     return RedirectToAction(nameof(Index));
