@@ -68,19 +68,24 @@ namespace Proyecto_ED22.Controllers
         }
 
         // GET: PacienteController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            var paciente = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id);
+            return View(paciente);
         }
 
         // POST: PacienteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(string id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (PacienteModel.Editar(id, Convert.ToInt32(collection["Telefono"]), Convert.ToDateTime(collection["FechaProximaConsulta"])))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {

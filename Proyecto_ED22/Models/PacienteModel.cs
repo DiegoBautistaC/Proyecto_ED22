@@ -73,6 +73,43 @@ namespace Proyecto_ED22.Models
             return true;
         }
 
+        public static bool Editar(string dpi, int telefono, DateTime fecha)
+        {
+            var PacienteDPI = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(dpi);
+            var PacienteNOMBRES = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(PacienteDPI.Nombre);
+            var PacienteLIMPIEZADENTAL = Data.Instance.ArbolAVL_LimpiezaDental.Encontrar(PacienteDPI.Nombre);
+            var PacienteORTODONCIA = Data.Instance.ArbolAVL_Ortodoncia.Encontrar(PacienteDPI.Nombre);
+            var PacienteCARIES = Data.Instance.ArbolAVL_Caries.Encontrar(PacienteDPI.Nombre);
+            var PacienteNOESPECIFICO = Data.Instance.ArbolAVL_NoEspecificos.Encontrar(PacienteDPI.Nombre);
+            if (PacienteLIMPIEZADENTAL != null)
+            {
+                PacienteLIMPIEZADENTAL.Telefono = telefono;
+                PacienteLIMPIEZADENTAL.FechaProximaConsulta = fecha;
+            }
+            if (PacienteORTODONCIA != null)
+            {
+                PacienteORTODONCIA.Telefono = telefono;
+                PacienteORTODONCIA.FechaProximaConsulta = fecha;
+            }
+            if (PacienteCARIES != null)
+            {
+                PacienteCARIES.Telefono = telefono;
+                PacienteCARIES.FechaProximaConsulta = fecha;
+            }
+            if (PacienteNOESPECIFICO != null)
+            {
+                PacienteNOESPECIFICO.Telefono = telefono;
+                PacienteNOESPECIFICO.FechaProximaConsulta = fecha;
+            }
+
+            PacienteDPI.Telefono = telefono;
+            PacienteDPI.FechaProximaConsulta = fecha;
+
+            PacienteNOMBRES.Telefono = telefono;
+            PacienteNOMBRES.FechaProximaConsulta = fecha;
+            return true;
+        }
+
         static int CalcularMeses(PacienteModel unPaciente)
         {
             int meses = 0;
