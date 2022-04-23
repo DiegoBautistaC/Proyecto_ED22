@@ -94,19 +94,23 @@ namespace Proyecto_ED22.Controllers
         }
 
         // GET: PacienteController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            return View(Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id));
         }
 
         // POST: PacienteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string id, IFormCollection collection)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (PacienteModel.Eliminar(id))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
