@@ -14,6 +14,87 @@ namespace Proyecto_ED22.Controllers
         // GET: PacienteController
         public ActionResult Index()
         {
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Maximus",
+                DPI = "1234567894512",
+                Edad = 19,
+                FechaUltimaConsulta = Convert.ToDateTime("05/06/2020"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = "Caries"
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Fernando",
+                DPI = "3050203740117",
+                Edad = 20,
+                FechaUltimaConsulta = Convert.ToDateTime("08/01/2018"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = ""
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Gloria",
+                DPI = "30514820123145",
+                Edad = 22,
+                FechaUltimaConsulta = Convert.ToDateTime("24/08/2017"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = "Ortodoncia"
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Enrique",
+                DPI = "6802340975126",
+                Edad = 40,
+                FechaUltimaConsulta = Convert.ToDateTime("26/04/2019"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = ""
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Fernanda",
+                DPI = "1235840625195",
+                Edad = 19,
+                FechaUltimaConsulta = Convert.ToDateTime("30/08/2021"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = "Limpieza dental"
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Ingrid",
+                DPI = "4251352012350",
+                Edad = 50,
+                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = ""
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Ingrid",
+                DPI = "4251352012350",
+                Edad = 50,
+                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = ""
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Ingrid",
+                DPI = "4251352012350",
+                Edad = 50,
+                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = ""
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Ingrid",
+                DPI = "4251352012350",
+                Edad = 50,
+                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = ""
+            });
             return View(Data.Instance.ArbolAVL_NombresPacientes);
         }
 

@@ -329,6 +329,59 @@ namespace ClasesAVL
             }
         }
 
+        public bool Verificacion(Predicate<T> unPredicado)
+        {
+            int contador = 0;
+            if (Raiz != null)
+            {
+                Verificacion(unPredicado, Raiz, ref contador);
+            }
+            if (contador < 8)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        void Verificacion(Predicate<T> unPredicado, NodoAVL<T> raizActual, ref int contador)
+        {
+            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null)
+            {
+                if (unPredicado(raizActual.Valor))
+                {
+                    contador++;  
+                }              
+            }
+            else if (raizActual.SubDerecho == null)
+            {
+                //verifica Izquierdo y luego Raiz
+                Verificacion(unPredicado, raizActual.SubIzquierdo, ref contador);
+                if (unPredicado(raizActual.Valor))
+                {
+                    contador++;
+                }
+            }
+            else if (raizActual.SubIzquierdo == null)
+            {
+                //verifica Raiz y luego derecho
+                if (unPredicado(raizActual.Valor))
+                {
+                    contador++;
+                }
+                Verificacion(unPredicado, raizActual.SubDerecho, ref contador);
+            }
+            else
+            {
+                //verificar Izquierdo, verificar raiz y luego derecho
+                Verificacion(unPredicado, raizActual.SubIzquierdo, ref contador);
+                if (unPredicado(raizActual.Valor))
+                {
+                    contador++;
+                }
+                Verificacion(unPredicado, raizActual.SubDerecho, ref contador);
+            }
+        }
+
         public IEnumerator<T> GetEnumerator()
         {
             Cola<T> cola = new Cola<T>();
