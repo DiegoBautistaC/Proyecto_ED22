@@ -78,39 +78,43 @@ namespace Proyecto_ED22.Models
 
         public static bool Editar(string dpi, int telefono, DateTime fecha)
         {
-            var PacienteDPI = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(dpi);
-            var PacienteNOMBRES = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(PacienteDPI.Nombre);
-            var PacienteLIMPIEZADENTAL = Data.Instance.ArbolAVL_LimpiezaDental.Encontrar(dpi);
-            var PacienteORTODONCIA = Data.Instance.ArbolAVL_Ortodoncia.Encontrar(dpi);
-            var PacienteCARIES = Data.Instance.ArbolAVL_Caries.Encontrar(dpi);
-            var PacienteNOESPECIFICO = Data.Instance.ArbolAVL_NoEspecificos.Encontrar(dpi);
-            if (PacienteLIMPIEZADENTAL != null)
+            if (Data.Instance.ArbolAVL_DPIPacientes.Verificacion(paciente => paciente.FechaProximaConsulta == fecha))
             {
-                PacienteLIMPIEZADENTAL.Telefono = telefono;
-                PacienteLIMPIEZADENTAL.FechaProximaConsulta = fecha;
-            }
-            if (PacienteORTODONCIA != null)
-            {
-                PacienteORTODONCIA.Telefono = telefono;
-                PacienteORTODONCIA.FechaProximaConsulta = fecha;
-            }
-            if (PacienteCARIES != null)
-            {
-                PacienteCARIES.Telefono = telefono;
-                PacienteCARIES.FechaProximaConsulta = fecha;
-            }
-            if (PacienteNOESPECIFICO != null)
-            {
-                PacienteNOESPECIFICO.Telefono = telefono;
-                PacienteNOESPECIFICO.FechaProximaConsulta = fecha;
-            }
+                var PacienteDPI = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(dpi);
+                var PacienteNOMBRES = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(PacienteDPI.Nombre);
+                var PacienteLIMPIEZADENTAL = Data.Instance.ArbolAVL_LimpiezaDental.Encontrar(dpi);
+                var PacienteORTODONCIA = Data.Instance.ArbolAVL_Ortodoncia.Encontrar(dpi);
+                var PacienteCARIES = Data.Instance.ArbolAVL_Caries.Encontrar(dpi);
+                var PacienteNOESPECIFICO = Data.Instance.ArbolAVL_NoEspecificos.Encontrar(dpi);
+                if (PacienteLIMPIEZADENTAL != null)
+                {
+                    PacienteLIMPIEZADENTAL.Telefono = telefono;
+                    PacienteLIMPIEZADENTAL.FechaProximaConsulta = fecha;
+                }
+                if (PacienteORTODONCIA != null)
+                {
+                    PacienteORTODONCIA.Telefono = telefono;
+                    PacienteORTODONCIA.FechaProximaConsulta = fecha;
+                }
+                if (PacienteCARIES != null)
+                {
+                    PacienteCARIES.Telefono = telefono;
+                    PacienteCARIES.FechaProximaConsulta = fecha;
+                }
+                if (PacienteNOESPECIFICO != null)
+                {
+                    PacienteNOESPECIFICO.Telefono = telefono;
+                    PacienteNOESPECIFICO.FechaProximaConsulta = fecha;
+                }
 
-            PacienteDPI.Telefono = telefono;
-            PacienteDPI.FechaProximaConsulta = fecha;
+                PacienteDPI.Telefono = telefono;
+                PacienteDPI.FechaProximaConsulta = fecha;
 
-            PacienteNOMBRES.Telefono = telefono;
-            PacienteNOMBRES.FechaProximaConsulta = fecha;
-            return true;
+                PacienteNOMBRES.Telefono = telefono;
+                PacienteNOMBRES.FechaProximaConsulta = fecha;
+                return true;
+            }
+            return false;
         }
 
         public static bool Eliminar(string dpi)

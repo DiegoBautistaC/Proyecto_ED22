@@ -70,28 +70,28 @@ namespace Proyecto_ED22.Controllers
             });
             Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
             {
-                Nombre = "Ingrid",
-                DPI = "4251352012350",
-                Edad = 50,
-                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
+                Nombre = "Andrea",
+                DPI = "45848848151515",
+                Edad = 35,
+                FechaUltimaConsulta = Convert.ToDateTime("09/08/2018"),
+                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
+                Descripcion = "Ortodoncia"
+            });
+            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
+            {
+                Nombre = "Amperi",
+                DPI = "6951354212300",
+                Edad = 35,
+                FechaUltimaConsulta = Convert.ToDateTime("09/10/2018"),
                 FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
                 Descripcion = ""
             });
             Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
             {
-                Nombre = "Ingrid",
-                DPI = "4251352012350",
+                Nombre = "Corlione",
+                DPI = "4201352151252",
                 Edad = 50,
-                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
-                FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
-                Descripcion = ""
-            });
-            Data.Instance.ArbolAVL_DPIPacientes.Insertar(new PacienteModel
-            {
-                Nombre = "Ingrid",
-                DPI = "4251352012350",
-                Edad = 50,
-                FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
+                FechaUltimaConsulta = Convert.ToDateTime("13/02/2018"),
                 FechaProximaConsulta = Convert.ToDateTime("29/04/2022"),
                 Descripcion = ""
             });
@@ -166,7 +166,7 @@ namespace Proyecto_ED22.Controllers
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                return View();
+                return View(Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id));
             }
             catch
             {
