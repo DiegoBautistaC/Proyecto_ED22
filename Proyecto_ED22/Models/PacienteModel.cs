@@ -119,31 +119,26 @@ namespace Proyecto_ED22.Models
 
         public static bool Eliminar(string dpi)
         {
-            var PacienteDPI = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(dpi);
-            var PacienteNOMBRES = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(PacienteDPI.Nombre);
-            var PacienteLIMPIEZADENTAL = Data.Instance.ArbolAVL_LimpiezaDental.Encontrar(dpi);
-            var PacienteORTODONCIA = Data.Instance.ArbolAVL_Ortodoncia.Encontrar(dpi);
-            var PacienteCARIES = Data.Instance.ArbolAVL_Caries.Encontrar(dpi);
-            var PacienteNOESPECIFICO = Data.Instance.ArbolAVL_NoEspecificos.Encontrar(dpi);
-            if (PacienteLIMPIEZADENTAL != null)
+            Data.Instance.ArbolAVL_DPIPacientes.Remover(dpi);
+            PacienteModel paciente = Data.Instance.ArbolAVL_DPIPacientes.Encontrar(dpi);
+            Data.Instance.ArbolAVL_NombresPacientes.Remover(paciente.Nombre);
+            if (Data.Instance.ArbolAVL_LimpiezaDental.Encontrar(dpi) != null)
             {
                 Data.Instance.ArbolAVL_LimpiezaDental.Remover(dpi);
             }
-            if (PacienteORTODONCIA != null)
+            if (Data.Instance.ArbolAVL_Ortodoncia.Encontrar(dpi) != null)
             {
                 Data.Instance.ArbolAVL_Ortodoncia.Remover(dpi);
             }
-            if (PacienteCARIES != null)
+            if (Data.Instance.ArbolAVL_Caries.Encontrar(dpi) != null)
             {
                 Data.Instance.ArbolAVL_Caries.Remover(dpi);
             }
-            if (PacienteNOESPECIFICO != null)
+            if (Data.Instance.ArbolAVL_NoEspecificos.Encontrar(dpi) != null)
             {
                 Data.Instance.ArbolAVL_NoEspecificos.Remover(dpi);
             }
 
-            Data.Instance.ArbolAVL_DPIPacientes.Remover(dpi);
-            Data.Instance.ArbolAVL_NombresPacientes.Remover(PacienteDPI.Nombre);
             return true;
         }
 

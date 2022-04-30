@@ -21,37 +21,54 @@ namespace ClasesAVL
 
         public ArbolAVL(Delegado unComparador, Delegado2 unComparador2)
         {
+            this.Raiz = null;
             this.Comparador = unComparador;
             this.Comparador2 = unComparador2;
         }
 
-        public void Insertar(T unValor)
+        /// <summary>
+        /// Método para la inserción de valores que será llamado por el árbol 
+        /// </summary>
+        /// <param name="unValor">Valor que será insertado</param>
+        public bool Insertar(T unValor)
         {
-            Insertar(unValor, ref this.Raiz);
+            bool insertado = false;
+            Insertar(unValor, ref this.Raiz, ref insertado);
+            return insertado;
         }
 
-        void Insertar(T unValor, ref NodoAVL<T> raizActual)
+        /// <summary>
+        /// Método interno de la inserción de un valor en el arbol
+        /// </summary>
+        /// <param name="unValor">Valor que será insertado</param>
+        /// <param name="raizActual">Nodo utilizado para recorrer el árbol buscando la posición ideal de inserción</param>
+        /// <param name="insertado">Variable de validación acerca de la inserción</param>
+        void Insertar(T unValor, ref NodoAVL<T> raizActual, ref bool insertado)
         {
-            if (raizActual == null)
+            if (raizActual == null) // Encontró la posición en la cual debe ir el valor y se inserta.
             {
-                NodoAVL<T> nodo = new NodoAVL<T>(unValor);
-                raizActual = nodo;
+                raizActual = new NodoAVL<T>(unValor);
+                insertado = true;
             }
-            else if (Comparador(unValor, raizActual.Valor) == 0) 
+            else if (Comparador(unValor, raizActual.Valor) == 0) // Encontró un valor repetido, el valor no es insertado.
             {
-                
+                insertado = false;
             }
-            else if (Comparador(unValor, raizActual.Valor) > 0)
+            else if (Comparador(unValor, raizActual.Valor) > 0) // El valor podría ser insertado en el subarbol DERECHO.
             {
-                this.Insertar(unValor, ref raizActual.SubDerecho);
+                this.Insertar(unValor, ref raizActual.SubDerecho, ref insertado);
             }
-            else
+            else // El valor podría ser insertado en el subarbol IZQUIERDO.
             {
-                this.Insertar(unValor, ref raizActual.SubIzquierdo);
+                this.Insertar(unValor, ref raizActual.SubIzquierdo, ref insertado);
             }
 
-            if (Comparador(unValor, raizActual.Valor) != 0)
+            // Comienza proceso de verificación de alturas que se ejecuta por cada nodo que se recorrió durante la recursión para insertar el valor en una posición correcta
+            // pero que el arbol podría no estar balanceado.
+
+            if (Comparador(unValor, raizActual.Valor) != 0) // Validar que no se comience en una hoja.
             {
+                //Procedimiento para el cálculo de la altura actual del subarbol, o nodo, luego de haber insertado.
                 if (raizActual.SubIzquierdo == null)
                 {
                     raizActual.Altura = raizActual.SubDerecho.Altura + 1;
@@ -62,58 +79,69 @@ namespace ClasesAVL
                 }
                 else
                 {
-                    raizActual.Altura = Math.Max(raizActual.SubIzquierdo.Altura, raizActual.SubDerecho.Altura) +1;
+                    raizActual.Altura = Math.Max(raizActual.SubIzquierdo.Altura, raizActual.SubDerecho.Altura) + 1;
                 }
 
+                // Cálculo del factor de equilibrio del subarbol, o nodo, actual basado en la altura previamente calculada de sus hijos
                 int FE = this.ObtenerFactorEquilibrio(raizActual);
 
-                if (FE > 1)
+                if (FE > 1) // Existe un desequilibrio izquierdo, la altura del subarbol IZQUIERDO es mayor a la del subarbol DERECHO. ROTACIONES A LA DERECHA.
                 {
-                    if (this.ObtenerFactorEquilibrio(raizActual.SubIzquierdo) < 0)
+                    if (this.ObtenerFactorEquilibrio(raizActual.SubIzquierdo) < 0) // Rotación doble hacia la derecha porque el subarbol IZQUIERDO cuenta con más valores a su derecha.
                     {
-                        //Rotación doble
                         raizActual.SubIzquierdo = this.RotacionSimpleAIzquierda(raizActual.SubIzquierdo);
                         raizActual = this.RotacionSimpleADerecha(raizActual);
                     }
-                    else
+                    else // Rotación simple hacia la derecha poque el subarbol IZQUIERDO no cuenta con más valores a su derecha.
                     {
-                        //Rotación simple
                         raizActual = this.RotacionSimpleADerecha(raizActual);
                     }
                 }
 
-                if (FE < -1)
+                if (FE < -1) // Existe un desequilibrio derecho, la altura del subarbol DERECHO es mayor a la del subarbol IZQUIERDO. ROTACIONES A LA IZQUIERDA.
                 {
-                    if (this.ObtenerFactorEquilibrio(raizActual.SubDerecho) > 0)
+                    if (this.ObtenerFactorEquilibrio(raizActual.SubDerecho) > 0) // Rotación doble hacia la Izquierda porque el subarbol DERECHO cuenta con más valores a su izquierda.
                     {
-                        //Rotación doble
                         raizActual.SubDerecho = this.RotacionSimpleADerecha(raizActual.SubDerecho);
                         raizActual = this.RotacionSimpleAIzquierda(raizActual);
                     }
-                    else
+                    else // Rotación simple hacia la izquierda porque el subarbol DERECHO no cuenta con más valores a su izquierda.
                     {
-                        //Rotación simple
                         raizActual = this.RotacionSimpleAIzquierda(raizActual);
                     }
                 }
             }
         }
+
+        /// <summary>
+        /// Función interna que devuelve el valor del farctor de equilibrio para un nodo en específico que no es una hoja.
+        /// </summary>
+        /// <param name="raizActual">Nodo intermedio o raiz en el que se desea calcular el factor de equilibrio, no puede ser una hoja</param>
+        /// <returns> Valor numérico del factor de equilibrio </returns>
         int ObtenerFactorEquilibrio(NodoAVL<T> raizActual)
         {
-            if (raizActual.SubIzquierdo == null)
+            if (raizActual.SubIzquierdo == null) // Si no hay subarbol IZQUIERDO el factor de equilibrio es 0 menos la altura del subarbol DERECHO.
             {
                 return -raizActual.SubDerecho.Altura;
             }
-            else if (raizActual.SubDerecho == null)
+            else if (raizActual.SubDerecho == null) // Si no hay dubarbol DERECHO el factor de equilibrio es la altura del subarbol IZQUIERDO.
             {
                 return raizActual.SubIzquierdo.Altura;
             }
-            else
+            else // Como tiene ambos subarboles entonces el facto de equilibrio es la resta del subarbol IZQUIERDO menos la del subarbol DERECHO.
             {
                 return raizActual.SubIzquierdo.Altura - raizActual.SubDerecho.Altura;
             }
         }
 
+        /// <summary>
+        /// Función interna que representa una rotación simple hacia la derecha.
+        /// </summary>
+        /// <param name="raizActual">Raiz en la que se produjo el desequilibrio</param>
+        /// <returns>Nodo resultante de la rotación simple hacia la derecha</returns>
+        /// x: Simboliza la raiz actual, donde se produjo el desequilibrio.
+        /// y: Simboliza el subarbol IZQUIERDO de la raiz actual.
+        /// z: Simboliza la raiz del subarbol DERECHO del subarbol IZQUIERDO de la raiz actual.
         NodoAVL<T> RotacionSimpleADerecha(NodoAVL<T> raizActual)
         {
             NodoAVL<T> x = raizActual;
@@ -131,6 +159,7 @@ namespace ClasesAVL
                 x.SubIzquierdo = null;
             }
 
+            // Recálculo de las alturas de los nodos involucrados en la rotación
             if (x.SubDerecho == null && x.SubIzquierdo == null)
             {
                 x.Altura = 1;
@@ -155,6 +184,14 @@ namespace ClasesAVL
             return y;
         }
 
+        /// <summary>
+        /// Función interna que representa una rotación simple hacia la izquierda.
+        /// </summary>
+        /// <param name="raizActual">Nodo intermedio en el que se produjo el desequilibrio</param>
+        /// <returns>El nodo resultante tras la rotación simple hacia la izquierda</returns>
+        /// x: Simboliza la raiz actual, donde se produjo el desequilibrio.
+        /// y: Simboliza el subarbol DERECHO de la raiz actual.
+        /// z: Simboliza el subarbol IZQUIERDO del subarbol DERECHO de la raiz actual
         NodoAVL<T> RotacionSimpleAIzquierda(NodoAVL<T> raizActual)
         {
             NodoAVL<T> x = raizActual;
@@ -172,6 +209,7 @@ namespace ClasesAVL
                 x.SubDerecho = null;
             }
 
+            // Recálculo de las alturas de los árboles involucrados en la rotación
             if (x.SubDerecho == null && x.SubIzquierdo == null)
             {
                 x.Altura = 1;
@@ -196,27 +234,33 @@ namespace ClasesAVL
             return y;
         }
 
-        public void Remover(string valor)
+        // Método público que es invocado para remover un elemento del árbol por medio de una llave.
+        public void Remover(string llave)
         {
-            this.Remover(valor, ref this.Raiz);
+            this.Remover(llave, ref this.Raiz);
         }
 
-        void Remover(string valor, ref NodoAVL<T> raizActual)
+        /// <summary>
+        /// Método interno que realiza el proceso de remover un elemento del árbol por medio de una llave.
+        /// </summary>
+        /// <param name="llave">Llave de búsqueda.</param>
+        /// <param name="raizActual">Nodo auxiliar utilizado para ubicar la posición de la llave en el arbol.</param>
+        void Remover(string llave, ref NodoAVL<T> raizActual)
         {
-            if(this.Comparador2(valor, raizActual.Valor) == 0)
+            if(this.Comparador2(llave, raizActual.Valor) == 0) // La llave se encuentra en raiz actual
             {
-                if(raizActual.SubIzquierdo == null && raizActual.SubDerecho == null)
+                if(raizActual.SubIzquierdo == null && raizActual.SubDerecho == null) // Caso en el que se remueve a una hoja
                 {
                     raizActual = null;
                 }
-                else if(raizActual.SubIzquierdo != null && raizActual.SubDerecho != null)
+                else if(raizActual.SubIzquierdo != null && raizActual.SubDerecho != null) // Caso en el que el nodo a remover cuenta con los dos hijos, se realiza intercambio con el mayor de los menores.
                 {
                     var Remplazo = this.MayorIzquierda(raizActual);
                     Remplazo.SubDerecho = raizActual.SubDerecho;
                     Remplazo.SubIzquierdo = raizActual.SubIzquierdo;
                     raizActual = Remplazo;
                 }
-                else
+                else // Caso en el que el nodo solo cuenta con un hijo que podría ser el derecho o izquierdo.
                 {
                     if(raizActual.SubDerecho != null)
                     {
@@ -228,16 +272,21 @@ namespace ClasesAVL
                     }
                 }
             }
-            else if(this.Comparador2(valor, raizActual.Valor) > 0)
+            else if(this.Comparador2(llave, raizActual.Valor) > 0) // La llave podría encontrarse en el sub arbol DERECHO.
             {
-                this.Remover(valor, ref raizActual.SubDerecho);
+                this.Remover(llave, ref raizActual.SubDerecho);
             }
-            else
+            else // La llave podría encontrarse en el subarbol IZQUIERDO.
             {
-                this.Remover(valor, ref raizActual.SubIzquierdo);
+                this.Remover(llave, ref raizActual.SubIzquierdo);
             }
         }
 
+        /// <summary>
+        /// Función interna que funciona como el intercambio entre un nodo y el valor con mayor denominación que se encuentra en el subárbol IZQUIERDO.
+        /// </summary>
+        /// <param name="raizActual">Nodo que será removido sustituyéndose por el valor más grande del subarbol IZQUIERDO.</param>
+        /// <returns></returns>
         NodoAVL<T> MayorIzquierda(NodoAVL<T> raizActual)
         {
             NodoAVL<T> Mayor = null;
@@ -250,8 +299,8 @@ namespace ClasesAVL
             else
             {
                 Auxiliar = raizActual.SubIzquierdo;
-                bool Validacion = true;
-                while(Auxiliar!= null && Validacion )
+                bool validacion = true;
+                while(Auxiliar!= null && validacion)
                 {
                     if(Auxiliar.SubDerecho.SubDerecho == null)
                     {
@@ -259,12 +308,13 @@ namespace ClasesAVL
                         {
                             Mayor = Auxiliar.SubDerecho;
                             Auxiliar.SubDerecho = Auxiliar.SubDerecho.SubIzquierdo;
-                            Validacion = false;
-                        }else
+                            validacion = false;
+                        }
+                        else
                         {
                             Mayor = Auxiliar.SubDerecho;
                             Auxiliar.SubDerecho = null;
-                            Validacion = false;
+                            validacion = false;
                         }
                     }
                     else
@@ -277,58 +327,68 @@ namespace ClasesAVL
             return Mayor;
         }
 
-        public T Encontrar(string valor)
+        //Función que se invoca para encontrar un elemento en el arbol a través de una llave.
+        public T Encontrar(string llave)
         {
-            return this.Encontrar(ref this.Raiz, valor);
+            return this.Encontrar(ref this.Raiz, llave);
         }
 
-        T Encontrar(ref NodoAVL<T> raizActual, string valor)
+        /// <summary>
+        /// Función que devuelve el elemento que corresponde a la llave solicitada para la búsqueda.
+        /// </summary>
+        /// <param name="raizActual">Nodo actual utilizado para recorrer el arbol es búsqueda del valor asociado a la llave.</param>
+        /// <param name="llave">Valor asociado al elemento que se está buscando.</param>
+        /// <returns></returns>
+        T Encontrar(ref NodoAVL<T> raizActual, string llave)
         {
-            if (raizActual == null)
+            if (raizActual == null) // No se encontró el valor correspondiente a la llave.
             {
                 return default(T);
             }
-            else if (this.Comparador2(valor, raizActual.Valor) == 0)
+            else if (this.Comparador2(llave, raizActual.Valor) == 0) // El elemento que corresponde a la llave se encontró en la raiz actual.
             {
                 return raizActual.Valor;
             }
-            else if (this.Comparador2(valor, raizActual.Valor) > 0)
+            else if (this.Comparador2(llave, raizActual.Valor) > 0) // EL elemento que corresponde a la llave podría encontrarse en el subarbol DERECHO.
             {
-                return this.Encontrar(ref raizActual.SubDerecho, valor);
+                return this.Encontrar(ref raizActual.SubDerecho, llave);
             }
-            else
+            else // El elemento que corresponde a la llave podría encontrarse en el subarbol IZQUIERDO.
             {
-                return this.Encontrar(ref raizActual.SubIzquierdo, valor);
+                return this.Encontrar(ref raizActual.SubIzquierdo, llave);
             }
         }
 
+        /// <summary>
+        /// Método para la lectura del árbol que representa el recorrido INORDER.
+        /// </summary>
+        /// <param name="raizActual">Nodo auxiliar para realizar el recorrido del arbol.</param>
+        /// <param name="cola">Cola donde se almacenan los datos de forma lineal para IEnumerable.</param>
         public void Leer(NodoAVL<T> raizActual, ref Cola<T> cola)
         {
-            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null)
+            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null) // Lee el valor de la raiz actual.
             {
                 cola.Encolar(raizActual.Valor);
             }
-            else if (raizActual.SubDerecho == null)
+            else if (raizActual.SubDerecho == null) // Se pasa al subarbol IZQUIERDO y luego lee el valor de la raiz actual.
             {
-                //lee Izquierdo y luego Raiz
                 this.Leer(raizActual.SubIzquierdo, ref cola);
                 cola.Encolar(raizActual.Valor);
             }
-            else if (raizActual.SubIzquierdo == null)
+            else if (raizActual.SubIzquierdo == null) // Lee el valor de la raiz actual y luego se para al subarbol DERECHO.
             {
-                //lee Raiz y luego derecho
                 cola.Encolar(raizActual.Valor);
                 this.Leer(raizActual.SubDerecho, ref cola);
             }
-            else
+            else // Se pasa el subarbol IZQUIERO, lee el valor de la raiz actual y luego se pasa al subarbol derecho.
             {
-                //lee Izquierdo, lee raiz y luego derecho
                 this.Leer(raizActual.SubIzquierdo, ref cola);
                 cola.Encolar(Raiz.Valor);
                 this.Leer(Raiz.SubDerecho, ref cola);
             }
         }
 
+        // Función de invocación para verificación la cantidad de elementos que existen con cierta característica.
         public bool Verificacion(Predicate<T> unPredicado)
         {
             int contador = 0;
@@ -345,36 +405,35 @@ namespace ClasesAVL
 
         void Verificacion(Predicate<T> unPredicado, NodoAVL<T> raizActual, ref int contador)
         {
-            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null)
+            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null) // Verifica el valor de la raiz actual con la característica enviada.
             {
-                if (unPredicado(raizActual.Valor))
+                if (unPredicado(raizActual.Valor)) // El valor de la raiz actual cumple con la característica.
                 {
                     contador++;  
                 }              
             }
-            else if (raizActual.SubDerecho == null)
+            else if (raizActual.SubDerecho == null) // Se mueve al subarbol IZQUIERDO y verifica el valor de la raiz actual.
             {
                 //verifica Izquierdo y luego Raiz
-                Verificacion(unPredicado, raizActual.SubIzquierdo, ref contador);
-                if (unPredicado(raizActual.Valor))
+                Verificacion(unPredicado, raizActual.SubIzquierdo, ref contador); 
+                if (unPredicado(raizActual.Valor)) // El valor de la raiz actual cumple con la característica.
                 {
                     contador++;
                 }
             }
-            else if (raizActual.SubIzquierdo == null)
+            else if (raizActual.SubIzquierdo == null) // Verifica el valor de la raiz actual y se mueve al subarbol IZQUIERDO.
             {
                 //verifica Raiz y luego derecho
-                if (unPredicado(raizActual.Valor))
+                if (unPredicado(raizActual.Valor)) // EL valor de la raiz actual cumple con la característica.
                 {
                     contador++;
                 }
                 Verificacion(unPredicado, raizActual.SubDerecho, ref contador);
             }
-            else
+            else // Se mueve al subarbol IZQUIERDO, verifica valor de la raiz actual y se mueve al subarbol DERECHO
             {
-                //verificar Izquierdo, verificar raiz y luego derecho
                 Verificacion(unPredicado, raizActual.SubIzquierdo, ref contador);
-                if (unPredicado(raizActual.Valor))
+                if (unPredicado(raizActual.Valor)) // El valor de la raiz actual cumple con la característica.
                 {
                     contador++;
                 }
@@ -382,6 +441,7 @@ namespace ClasesAVL
             }
         }
 
+        // Método para el Enumerable y que se puede visualizar el arbol.
         public IEnumerator<T> GetEnumerator()
         {
             Cola<T> cola = new Cola<T>();
