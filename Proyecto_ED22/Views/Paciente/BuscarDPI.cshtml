@@ -5,6 +5,7 @@
 }
 
 <h1>Buscar DPI</h1>
+<br />
 
 @using (Html.BeginForm())
 {
@@ -13,7 +14,7 @@
         <input type="submit" value="Buscar DPI" />
     </p>
 }
-
+<br />
 @if (Model != null)
 {
     <div>
@@ -79,6 +80,15 @@
         </dl>
     </div>
     @Html.ActionLink("Editar", "Edit", new { id = Model.DPI })
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        alert("@ViewBag.Message");
+    };
+    </script>
 }
 
 <div>

@@ -9,7 +9,7 @@ namespace ClasesAVL
 {
     public class ArbolAVL <T> : IEnumerable<T>
     {
-        public NodoAVL<T> Raiz;
+        NodoAVL<T> Raiz;
 
         public delegate int Delegado(T valor1, T valor2);
 
@@ -24,6 +24,11 @@ namespace ClasesAVL
             this.Raiz = null;
             this.Comparador = unComparador;
             this.Comparador2 = unComparador2;
+        }
+
+        public bool Vacio()
+        {
+            return Raiz == null;
         }
 
         /// <summary>

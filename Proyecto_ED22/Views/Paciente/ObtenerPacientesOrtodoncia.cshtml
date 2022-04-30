@@ -79,7 +79,7 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Detalles", "Details", new { id=item.DPI })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.DPI })
                     </td>
                 </tr>
             }
@@ -87,3 +87,12 @@
 
     </tbody>
 </table>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        alert("@ViewBag.Message");
+    };
+    </script>
+}

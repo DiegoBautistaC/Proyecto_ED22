@@ -11,37 +11,37 @@
     <h4>Paciente</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nombre)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DPI)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DPI)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Edad)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Edad)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Telefono)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Telefono)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.FechaUltimaConsulta)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FechaProximaConsulta)
         </dt>
         <dd class="col-sm-10">
@@ -54,7 +54,7 @@
                 <p>Sin fecha</p>
             }
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descripcion)
         </dt>
         <dd class="col-sm-10">
@@ -68,9 +68,18 @@
             }
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="submit" value="Eliminar" class="btn btn-danger" /> |
         <a asp-action="Index">Regresar a la lista</a>
     </form>
 </div>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        alert("@ViewBag.Message");
+    };
+    </script>
+}

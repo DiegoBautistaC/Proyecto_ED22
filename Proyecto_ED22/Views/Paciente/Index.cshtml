@@ -21,9 +21,6 @@
                 @Html.DisplayNameFor(model => model.DPI)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Edad)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Telefono)
             </th>
             <th>
@@ -31,9 +28,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaProximaConsulta)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
             </th>
             <th></th>
         </tr>
@@ -51,9 +45,6 @@
                         @Html.DisplayFor(modelItem => item.DPI)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Edad)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.Telefono)
                     </td>
                     <td>
@@ -67,16 +58,6 @@
                         else
                         {
                             <p>Sin fecha</p>
-                        }
-                    </td>
-                    <td>
-                        @if (item.Descripcion != "")
-                        {
-                            @Html.DisplayFor(modelItem => item.Descripcion);
-                        }
-                        else
-                        {
-                            <p>Sin Descripción</p>
                         }
                     </td>
                     <td>

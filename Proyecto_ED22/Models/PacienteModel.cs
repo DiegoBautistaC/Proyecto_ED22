@@ -51,27 +51,29 @@ namespace Proyecto_ED22.Models
         public static bool Guardar(PacienteModel unPaciente)
         {
             if (Data.Instance.ArbolAVL_DPIPacientes.Verificacion(paciente => paciente.FechaProximaConsulta == unPaciente.FechaProximaConsulta))
-            {   
-                Data.Instance.ArbolAVL_DPIPacientes.Insertar(unPaciente);
-                Data.Instance.ArbolAVL_NombresPacientes.Insertar(unPaciente);
-                int meses = CalcularMeses(unPaciente);
-                if (unPaciente.Descripcion == "" && meses >= 6)
+            {
+                if (Data.Instance.ArbolAVL_DPIPacientes.Insertar(unPaciente))
                 {
-                    Data.Instance.ArbolAVL_LimpiezaDental.Insertar(unPaciente);
+                    Data.Instance.ArbolAVL_NombresPacientes.Insertar(unPaciente);
+                    int meses = CalcularMeses(unPaciente);
+                    if (unPaciente.Descripcion == "" && meses >= 6)
+                    {
+                        Data.Instance.ArbolAVL_LimpiezaDental.Insertar(unPaciente);
+                    }
+                    if (unPaciente.Descripcion.ToUpper().Contains("ORTODONCIA") && meses >= 2)
+                    {
+                        Data.Instance.ArbolAVL_Ortodoncia.Insertar(unPaciente);
+                    }
+                    if (unPaciente.Descripcion.ToUpper().Contains("CARIES") && meses >= 4)
+                    {
+                        Data.Instance.ArbolAVL_Caries.Insertar(unPaciente);
+                    }
+                    if (unPaciente.Descripcion != "" && !unPaciente.Descripcion.ToUpper().Contains("ORTODONCIA") && !unPaciente.Descripcion.ToUpper().Contains("CARIES") && meses >= 6)
+                    {
+                        Data.Instance.ArbolAVL_NoEspecificos.Insertar(unPaciente);
+                    }
+                    return true;
                 }
-                if (unPaciente.Descripcion.ToUpper().Contains("ORTODONCIA") && meses >= 2)
-                {
-                    Data.Instance.ArbolAVL_Ortodoncia.Insertar(unPaciente);
-                }
-                if (unPaciente.Descripcion.ToUpper().Contains("CARIES") && meses >= 4)
-                {
-                    Data.Instance.ArbolAVL_Caries.Insertar(unPaciente);
-                }
-                if (unPaciente.Descripcion != "" && !unPaciente.Descripcion.ToUpper().Contains("ORTODONCIA") && !unPaciente.Descripcion.ToUpper().Contains("CARIES") && meses >= 6)
-                {
-                    Data.Instance.ArbolAVL_NoEspecificos.Insertar(unPaciente);
-                }
-                return true;
             }
             return false;
         }

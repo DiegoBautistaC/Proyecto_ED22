@@ -5,6 +5,7 @@
 }
 
 <h1>Buscar Nombre</h1>
+<br />
 @using (Html.BeginForm())
 {
     <p>
@@ -12,6 +13,7 @@
         <input type="submit" value="Buscar nombre" />
     </p>
 }
+<br />
 @if (Model != null)
 {
     <div>
@@ -71,14 +73,23 @@
                 }
                 else
                 {
-                    <p class="text-center">Sin Descripción</p>
+                    <p>Sin Descripción</p>
                 }
             </dd>
         </dl>
 
     </div>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.DPI }) 
+    @Html.ActionLink("Editar", "Edit", new { id = Model.DPI })
 
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        alert("@ViewBag.Message");
+    };
+    </script>
 }
 
 <div>
