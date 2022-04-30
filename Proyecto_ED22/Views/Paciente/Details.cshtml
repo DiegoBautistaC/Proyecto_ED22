@@ -1,27 +1,15 @@
 ﻿@model Proyecto_ED22.Models.PacienteModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalles";
 }
 
-<h1>Details</h1>
+<h1>Detalles de @Html.DisplayFor(model => model.Nombre)</h1>
 
 <div>
-    <h4>PacienteModel</h4>
+    <h4>Identificación: @Html.DisplayFor(model => model.DPI)</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DPI)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DPI)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Edad)
         </dt>
@@ -46,11 +34,11 @@
         <dd class="col-sm-10">
             @if (Model.FechaProximaConsulta != null)
             {
-                Html.DisplayNameFor(model => model.FechaProximaConsulta);
+                @Html.DisplayFor(model => model.FechaProximaConsulta);
             }
             else
             {
-                <p class="text-center">Sin fecha</p>
+                <p>Sin fecha</p>
             }
         </dd>
         <dt class = "col-sm-2">
@@ -59,16 +47,16 @@
         <dd class="col-sm-10">
             @if (Model.Descripcion != "")
             {
-                Html.DisplayNameFor(model => model.Descripcion);
+                @Html.DisplayFor(model => model.Descripcion);
             }
             else
             {
-                <p class="text-center">Sin Descripción</p>
+                <p>Sin Descripción</p>
             }
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.DPI }) |
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.DPI }) |
+    <a asp-action="Index">Regresar</a>
 </div>

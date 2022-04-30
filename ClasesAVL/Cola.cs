@@ -21,13 +21,13 @@ namespace ClasesAVL
         }
 
         public static Nodo<T> Cabeza;
-        public static Nodo<T> Coola;
+        public static Nodo<T> Queue;
         public static int Tamaño;
 
         public Cola()
         {
             Cabeza = null;
-            Coola = null;
+            Queue = null;
             Tamaño = 0;
         }
 
@@ -40,22 +40,22 @@ namespace ClasesAVL
             }
             else
             {
-                Coola.Siguiente = nuevoNodo;
+                Queue.Siguiente = nuevoNodo;
             }
-            Coola = nuevoNodo;
+            Queue = nuevoNodo;
             Tamaño++;
             return true;
         }
         
         public T Desencolar()
         {
-            T valor;
-            valor = Cabeza.Valor;
+            T valor = Cabeza.Valor;
             if(Tamaño == 1)
             {
                 Cabeza = null;
-                Coola = null;
-            }else
+                Queue = null;
+            }
+            else
             {
                 Cabeza = Cabeza.Siguiente;
             }

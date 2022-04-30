@@ -81,7 +81,8 @@ namespace Proyecto_ED22.Controllers
         {
             try
             {
-                if (PacienteModel.Editar(id, Convert.ToInt32(collection["Telefono"]), Convert.ToDateTime(collection["FechaProximaConsulta"])))
+                var validacion = PacienteModel.Editar(id, Convert.ToInt32(collection["Telefono"]), Convert.ToDateTime(collection["FechaProximaConsulta"]));
+                if (validacion)
                 {
                     return RedirectToAction(nameof(Index));
                 }

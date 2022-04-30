@@ -289,42 +289,50 @@ namespace ClasesAVL
         /// <returns></returns>
         NodoAVL<T> MayorIzquierda(NodoAVL<T> raizActual)
         {
-            NodoAVL<T> Mayor = null;
-            NodoAVL<T> Auxiliar = raizActual;
+            NodoAVL<T> mayor = null;
+            NodoAVL<T> auxiliar = raizActual;
             if(raizActual.SubIzquierdo.SubDerecho == null)
             {
-                Mayor = Auxiliar.SubIzquierdo;
-                Auxiliar.SubIzquierdo = Auxiliar.SubIzquierdo.SubIzquierdo;
+                if (auxiliar.SubIzquierdo != null)
+                {
+                    mayor = auxiliar.SubIzquierdo;
+                    auxiliar.SubIzquierdo = auxiliar.SubIzquierdo.SubIzquierdo;
+                }
+                else
+                {
+                    mayor = auxiliar.SubIzquierdo;
+                    auxiliar.SubIzquierdo = null;
+                }
             }
             else
             {
-                Auxiliar = raizActual.SubIzquierdo;
+                auxiliar = raizActual.SubIzquierdo;
                 bool validacion = true;
-                while(Auxiliar!= null && validacion)
+                while(auxiliar!= null && validacion)
                 {
-                    if(Auxiliar.SubDerecho.SubDerecho == null)
+                    if(auxiliar.SubDerecho.SubDerecho == null)
                     {
-                        if(Auxiliar.SubDerecho.SubIzquierdo != null)
+                        if(auxiliar.SubDerecho.SubIzquierdo != null)
                         {
-                            Mayor = Auxiliar.SubDerecho;
-                            Auxiliar.SubDerecho = Auxiliar.SubDerecho.SubIzquierdo;
+                            mayor = auxiliar.SubDerecho;
+                            auxiliar.SubDerecho = auxiliar.SubDerecho.SubIzquierdo;
                             validacion = false;
                         }
                         else
                         {
-                            Mayor = Auxiliar.SubDerecho;
-                            Auxiliar.SubDerecho = null;
+                            mayor = auxiliar.SubDerecho;
+                            auxiliar.SubDerecho = null;
                             validacion = false;
                         }
                     }
                     else
                     {
-                        Auxiliar = Auxiliar.SubDerecho;
+                        auxiliar = auxiliar.SubDerecho;
                     } 
                         
                 }
             }
-            return Mayor;
+            return mayor;
         }
 
         //Función que se invoca para encontrar un elemento en el arbol a través de una llave.
@@ -356,35 +364,6 @@ namespace ClasesAVL
             else // El elemento que corresponde a la llave podría encontrarse en el subarbol IZQUIERDO.
             {
                 return this.Encontrar(ref raizActual.SubIzquierdo, llave);
-            }
-        }
-
-        /// <summary>
-        /// Método para la lectura del árbol que representa el recorrido INORDER.
-        /// </summary>
-        /// <param name="raizActual">Nodo auxiliar para realizar el recorrido del arbol.</param>
-        /// <param name="cola">Cola donde se almacenan los datos de forma lineal para IEnumerable.</param>
-        public void Leer(NodoAVL<T> raizActual, ref Cola<T> cola)
-        {
-            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null) // Lee el valor de la raiz actual.
-            {
-                cola.Encolar(raizActual.Valor);
-            }
-            else if (raizActual.SubDerecho == null) // Se pasa al subarbol IZQUIERDO y luego lee el valor de la raiz actual.
-            {
-                this.Leer(raizActual.SubIzquierdo, ref cola);
-                cola.Encolar(raizActual.Valor);
-            }
-            else if (raizActual.SubIzquierdo == null) // Lee el valor de la raiz actual y luego se para al subarbol DERECHO.
-            {
-                cola.Encolar(raizActual.Valor);
-                this.Leer(raizActual.SubDerecho, ref cola);
-            }
-            else // Se pasa el subarbol IZQUIERO, lee el valor de la raiz actual y luego se pasa al subarbol derecho.
-            {
-                this.Leer(raizActual.SubIzquierdo, ref cola);
-                cola.Encolar(Raiz.Valor);
-                this.Leer(Raiz.SubDerecho, ref cola);
             }
         }
 
@@ -438,6 +417,35 @@ namespace ClasesAVL
                     contador++;
                 }
                 Verificacion(unPredicado, raizActual.SubDerecho, ref contador);
+            }
+        }
+
+        /// <summary>
+        /// Método para la lectura del árbol que representa el recorrido INORDER.
+        /// </summary>
+        /// <param name="raizActual">Nodo auxiliar para realizar el recorrido del arbol.</param>
+        /// <param name="cola">Cola donde se almacenan los datos de forma lineal para IEnumerable.</param>
+        public void Leer(NodoAVL<T> raizActual, ref Cola<T> cola)
+        {
+            if (raizActual.SubDerecho == null && raizActual.SubIzquierdo == null) // Lee el valor de la raiz actual.
+            {
+                cola.Encolar(raizActual.Valor);
+            }
+            else if (raizActual.SubDerecho == null) // Se pasa al subarbol IZQUIERDO y luego lee el valor de la raiz actual.
+            {
+                this.Leer(raizActual.SubIzquierdo, ref cola);
+                cola.Encolar(raizActual.Valor);
+            }
+            else if (raizActual.SubIzquierdo == null) // Lee el valor de la raiz actual y luego se para al subarbol DERECHO.
+            {
+                cola.Encolar(raizActual.Valor);
+                this.Leer(raizActual.SubDerecho, ref cola);
+            }
+            else // Se pasa el subarbol IZQUIERO, lee el valor de la raiz actual y luego se pasa al subarbol derecho.
+            {
+                this.Leer(raizActual.SubIzquierdo, ref cola);
+                cola.Encolar(raizActual.Valor);
+                this.Leer(raizActual.SubDerecho, ref cola);
             }
         }
 

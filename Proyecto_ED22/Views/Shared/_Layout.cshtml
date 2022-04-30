@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Paciente" asp-action="Index">Registro de consultas</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Paciente" asp-action="Index">Citas</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,7 +19,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="BuscarNombre">Buscar Nombre</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="BuscarDPI">Buscar DPI</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="ObtenerPacientesLimpiezaDental"> Limpieza dental</a>
@@ -31,7 +35,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="ObtenerPacientesCaries">Caries</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area=""asp-controller="Paciente"  asp-action="ObtenerPacientesNoEspecifico">Tratamiento No Especifico</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Paciente" asp-action="ObtenerPacientesNoEspecifico">Tratamiento No Específico</a>
                         </li>
                     </ul>
                 </div>
@@ -46,7 +50,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - Proyecto_ED22 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Programa de citas de Salud para tu sonrisa
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

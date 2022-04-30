@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<Proyecto_ED22.Models.PacienteModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado";
 }
 
-<h1>Index</h1>
+<h1>Listado pacientes</h1>
 
-<p>
-    <a asp-action="Create">| Crear |</a>
-    <a asp-action="BuscarNombre">Buscar Nombre</a>
-    <a asp-action="BuscarDPI">Buscar DPI</a>
+<p  class="text-center">
+    <a asp-action="Create">Agendar cita</a>
 </p>
+<br />
+
 <table class="table">
     <thead>
         <tr>
@@ -28,11 +28,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaProximaConsulta)
-
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -68,7 +66,7 @@
                         }
                         else
                         {
-                            <p class="text-center">Sin fecha</p>
+                            <p>Sin fecha</p>
                         }
                     </td>
                     <td>
@@ -78,13 +76,13 @@
                         }
                         else
                         {
-                            <p class="text-center">Sin Descripción</p>
+                            <p>Sin Descripción</p>
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new {  id=item.DPI  }) |
-                        @Html.ActionLink("Details", "Details", new {  id=item.DPI  }) |
-                        @Html.ActionLink("Delete", "Delete", new {  id=item.DPI  })
+                        @Html.ActionLink("Recandelarizar", "Edit", new {  id=item.DPI  }) |
+                        @Html.ActionLink("Detalles", "Details", new {  id=item.DPI  }) |
+                        @Html.ActionLink("Atender/Cancelar", "Delete", new {  id=item.DPI  })
                     </td>
                 </tr>
             }
