@@ -4,7 +4,12 @@
     ViewData["Title"] = "ObtenerPacienteLimpiezaDental";
 }
 
-<h1>ObtenerPacienteLimpiezaDental</h1>
+<h1 class="text-center">Seguimiento de tratamientos de limipieza dental</h1>
+<br />
+<div>
+    <a asp-action="Index">Regresar a la lista</a>
+</div>
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -56,7 +61,7 @@
                     <td>
                         @if (item.FechaProximaConsulta != null)
                         {
-                            Html.DisplayNameFor(model => model.FechaUltimaConsulta);
+                            @Html.DisplayFor(modelItem => item.FechaProximaConsulta);
                         }
                         else
                         {
@@ -66,7 +71,7 @@
                     <td>
                         @if (item.Descripcion != "")
                         {
-                            Html.DisplayNameFor(model => model.Descripcion);
+                            @Html.DisplayFor(modelItem => item.Descripcion);
                         }
                         else
                         {
@@ -74,10 +79,19 @@
                         }
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new {  id=item.DPI  })
+                        @Html.ActionLink("Detalles", "Details", new { id = item.DPI })
                     </td>
                 </tr>
             }
         }
     </tbody>
 </table>
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+    window.onload = function () {
+        alert("@ViewBag.Message");
+    };
+    </script>
+}

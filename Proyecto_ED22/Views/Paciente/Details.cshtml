@@ -1,0 +1,62 @@
+﻿@model Proyecto_ED22.Models.PacienteModel
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalles de @Html.DisplayFor(model => model.Nombre)</h1>
+
+<div>
+    <h4>Identificación: @Html.DisplayFor(model => model.DPI)</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Edad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Edad)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaUltimaConsulta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaUltimaConsulta)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaProximaConsulta)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.FechaProximaConsulta != null)
+            {
+                @Html.DisplayFor(model => model.FechaProximaConsulta);
+            }
+            else
+            {
+                <p>Sin fecha</p>
+            }
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Descripcion != "")
+            {
+                @Html.DisplayFor(model => model.Descripcion);
+            }
+            else
+            {
+                <p>Sin Descripción</p>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.DPI }) |
+    <a asp-action="Index">Regresar</a>
+</div>

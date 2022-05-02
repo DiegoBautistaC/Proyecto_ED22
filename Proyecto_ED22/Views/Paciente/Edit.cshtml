@@ -1,31 +1,31 @@
 ﻿@model Proyecto_ED22.Models.PacienteModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Agendar cita</h1>
+<h1>Recandelarización de cita</h1>
 
-<h4>Llene la información necesaria para agendra una nueva cita.</h4>
+<h4>Paciente: @Html.DisplayFor(model => model.Nombre)</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="DPI" class="control-label"></label>
-                <input asp-for="DPI" class="form-control" />
+                <p>@Html.DisplayFor(model => model.DPI)</p>
                 <span asp-validation-for="DPI" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Edad" class="control-label"></label>
-                <input asp-for="Edad" class="form-control" />
-                <span asp-validation-for="Edad" class="text-danger"></span>
+                <label asp-for="FechaUltimaConsulta" class="control-label"></label>
+                <p>@Html.DisplayFor(model => model.FechaUltimaConsulta)</p>
+                <span asp-validation-for="FechaUltimaConsulta" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <p>@Html.DisplayFor(model => model.Descripcion)</p>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Telefono" class="control-label"></label>
@@ -33,22 +33,12 @@
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaUltimaConsulta" class="control-label"></label>
-                <input asp-for="FechaUltimaConsulta" class="form-control" />
-                <span asp-validation-for="FechaUltimaConsulta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="FechaProximaConsulta" class="control-label"></label>
                 <input asp-for="FechaProximaConsulta" class="form-control" />
                 <span asp-validation-for="FechaProximaConsulta" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Actualizar" class="btn btn-primary" />
             </div>
         </form>
     </div>
