@@ -372,6 +372,31 @@ namespace ClasesAVL
             }
         }
 
+        public T Encontrar(Predicate<T> comparador, string llave)
+        {
+            return Encontrar(ref Raiz, comparador, llave);
+        }
+
+        T Encontrar(ref NodoAVL<T> raizActual, Predicate<T> comparador, string llave)
+        {
+            if (raizActual == null) // No se encontró el valor correspondiente a la llave.
+            {
+                return default(T);
+            }
+            else if (comparador(raizActual.Valor)) // El elemento que corresponde a la llave se encontró en la raiz actual.
+            {
+                return raizActual.Valor;
+            }
+            else if (this.Comparador2(llave, raizActual.Valor) > 0) // EL elemento que corresponde a la llave podría encontrarse en el subarbol DERECHO.
+            {
+                return Encontrar(ref raizActual.SubDerecho, comparador, llave);
+            }
+            else // El elemento que corresponde a la llave podría encontrarse en el subarbol IZQUIERDO.
+            {
+                return Encontrar(ref raizActual.SubIzquierdo, comparador, llave);
+            }
+        }
+
         // Función de invocación para verificación la cantidad de elementos que existen con cierta característica.
         public bool Verificacion(Predicate<T> unPredicado)
         {

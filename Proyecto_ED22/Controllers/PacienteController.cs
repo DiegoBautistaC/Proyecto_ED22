@@ -14,6 +14,7 @@ namespace Proyecto_ED22.Controllers
         // GET: PacienteController
         public ActionResult Index()
         {
+            bool v = false;
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Diego Bautista",
@@ -23,7 +24,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("08/05/2021"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = ""
-            });
+            },ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Victor Bautista",
@@ -32,7 +33,7 @@ namespace Proyecto_ED22.Controllers
                 Telefono = 81532491,
                 FechaUltimaConsulta = Convert.ToDateTime("06/07/2018"),
                 Descripcion = "Ortodoncia"
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Douglas Salazar",
@@ -42,7 +43,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("24/12/2016"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = "Colocación de Braquets"
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Manuel Bautista",
@@ -52,7 +53,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("06/03/2022"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = "Trataimiento de ortodoncia"
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Nidia Cruz",
@@ -62,7 +63,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("13/03/2020"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = "Caries"
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Maximus Alexander",
@@ -72,7 +73,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("01/06/2021"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = ""
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Lourdes del Socorro",
@@ -82,7 +83,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("04/08/2018"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = "Relleno de diente"
-            });
+            }, ref v );
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Ezequiel Cruz",
@@ -92,7 +93,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("04/11/2002"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = "Tratamiento de ortodoncia"
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Ricardo García",
@@ -102,7 +103,7 @@ namespace Proyecto_ED22.Controllers
                 FechaUltimaConsulta = Convert.ToDateTime("07/05/2019"),
                 FechaProximaConsulta = Convert.ToDateTime("09/05/2022"),
                 Descripcion = "Seguimiento de caries"
-            });
+            }, ref v);
             PacienteModel.Guardar(new PacienteModel
             {
                 Nombre = "Victor Bautista",
@@ -111,7 +112,7 @@ namespace Proyecto_ED22.Controllers
                 Telefono = 18654250,
                 FechaUltimaConsulta = Convert.ToDateTime("04/04/2022"),
                 Descripcion = "Caries"
-            });
+            }, ref v);
             return View(Data.Instance.ArbolAVL_NombresPacientes);
         }
 
@@ -155,21 +156,23 @@ namespace Proyecto_ED22.Controllers
                     if (Convert.ToDateTime(collection["FechaProximaConsulta"]).CompareTo(DateTime.Today) <= 0)
                     {
                         ViewBag.Message = "No se puede registrar una cita para día anteriores o el actual.";
-                        if (Convert.ToDateTime(collection["FechaProximaConsulta"]).CompareTo(Convert.ToDateTime(collection["FechaUltimaConsulta"])) == 0)
-                        {
-                            ViewBag.Message = "La fecha de ultima consulta no puede ser igual a la de proxima consulta.";
-                        }
                         nuevoPaciente.FechaProximaConsulta = new DateTime();
                         return View(nuevoPaciente);
                     }
                     nuevoPaciente.FechaProximaConsulta = Convert.ToDateTime(collection["FechaProximaConsulta"]);
                 }
-                var validacion = PacienteModel.Guardar(nuevoPaciente);
+                bool dpiRepetido = false;
+                var validacion = PacienteModel.Guardar(nuevoPaciente, ref dpiRepetido);
+                if (dpiRepetido)
+                {
+                    ViewBag.Message = "No es posible almacenar al paciente, porque el DPI y existe en el sistema.";
+                    return View(nuevoPaciente);
+                }
                 if (validacion)
                 {
                     return RedirectToAction(nameof(Index));
                 }
-                ViewBag.Message = "No es posible almacenar al paciente, porque el dia esta lleno o el DPI ya existe en el sistema.";
+                ViewBag.Message = "No es posible almacenar al paciente, porque el dia esta lleno";
                 return View(nuevoPaciente);
             }
             catch
@@ -193,12 +196,20 @@ namespace Proyecto_ED22.Controllers
         {
             try
             {
-                if (DateTime.Today.CompareTo(Convert.ToDateTime(collection["FechaProximaConsulta"])) > 0)
+                if (collection["FechaProximaConsulta"] != "")
                 {
-                    ViewBag.Message = "La nueva fecha para proxima consulta no es valida.";
+                    if (DateTime.Today.CompareTo(Convert.ToDateTime(collection["FechaProximaConsulta"])) > 0)
+                    {
+                        ViewBag.Message = "La nueva fecha para proxima consulta no es valida.";
+                        return View(Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id));
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Debe ingresar un fecha para la recandelarización de la cita";
                     return View(Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id));
                 }
-                var validacion = PacienteModel.Editar(id, Convert.ToInt32(collection["Telefono"]), Convert.ToDateTime(collection["FechaProximaConsulta"]));
+                var validacion = PacienteModel.Editar(id, Convert.ToInt32(collection["Telefono"]), collection["Descripcion"], Convert.ToDateTime(collection["FechaProximaConsulta"]));
                 if (validacion)
                 {
                     return RedirectToAction(nameof(Index));
@@ -209,7 +220,7 @@ namespace Proyecto_ED22.Controllers
             catch
             {
                 ViewBag.Message = "Ha ocurrido un error inesperado.";
-                return View();
+                return View(Data.Instance.ArbolAVL_DPIPacientes.Encontrar(id));
             }
         }
 
@@ -253,7 +264,7 @@ namespace Proyecto_ED22.Controllers
             {
                 if(nombre != null)
                 {
-                    var paciente = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(nombre);
+                    var paciente = Data.Instance.ArbolAVL_NombresPacientes.Encontrar(paciente => paciente.Nombre == nombre,nombre);
                     if (paciente != null)
                     {
                         return View(paciente);
@@ -292,7 +303,7 @@ namespace Proyecto_ED22.Controllers
                     {
                         return View(paciente);
                     }
-                    ViewBag.Message = "No se encontro al paciente con DPI " + dpi;
+                    ViewBag.Message = "No se encontro al paciente con DPI " + dpi + ".";
                     return View();
                 }
                 else
